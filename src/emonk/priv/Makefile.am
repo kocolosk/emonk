@@ -11,8 +11,7 @@
 ## the License.
 
 emonklibdir = $(localerlanglibdir)/emonk-$(version)
-emonkprivdir = $(emonk)/priv
-emonkprivlibdir = $(emonk)/priv/lib
+emonkprivdir = $(emonklibdir)/priv
 
 EMONK_SRCS = \
     emonk.c \
@@ -21,7 +20,7 @@ EMONK_SRCS = \
     emonk_to_js.c \
     emonk_util.c
 
-emonkprivlib_LTLIBRARIES = emonk_drv.la
+emonkpriv_LTLIBRARIES = emonk_drv.la
 emonk_drv_la_SOURCES = $(EMONK_SRCS)
 emonk_drv_la_LDFLAGS = -module -avoid-version
 emonk_drv_la_LIBADD = @JSLIB@ -lnspr4
@@ -32,12 +31,12 @@ emonk_drv.so: emonk_drv.la
 	$(LN_S) .libs/emonk_drv.so $@
 
 install-data-hook:
-	if test -f "$(DESTDIR)$(emonkprivlibdir)/emonk_drv"; then \
-	    rm -f "$(DESTDIR)$(emonkprivlibdir)/emonk_drv.so"; \
-	    cd "$(DESTDIR)$(emonkprivlibdir)" && $(LN_S) emonk_drv emonk_drv.so; \
+	if test -f "$(DESTDIR)$(emonkprivdir)/emonk_drv"; then \
+	    rm -f "$(DESTDIR)$(emonkprivdir)/emonk_drv.so"; \
+	    cd "$(DESTDIR)$(emonkprivdir)" && $(LN_S) emonk_drv emonk_drv.so; \
 	fi
 
 uninstall-local:
-	if test -f "$(DESTDIR)$(emonkprivlibdir)/emonk_drv"; then \
-	    rm -f "$(DESTDIR)$(emonkprivlibdir)/emonk_drv.so"; \
+	if test -f "$(DESTDIR)$(emonkprivdir)/emonk_drv"; then \
+	    rm -f "$(DESTDIR)$(emonkprivdir)/emonk_drv.so"; \
 	fi
